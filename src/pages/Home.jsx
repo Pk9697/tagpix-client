@@ -1,5 +1,13 @@
+import ImageGrid from '../components/ImageGrid'
+import ScrollableList from '../components/ScrollableList'
+
 function Home() {
-  return <div>Home</div>
+  return (
+    <>
+      <ScrollableList />
+      <ImageGrid />
+    </>
+  )
 }
 
 export default Home
