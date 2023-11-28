@@ -2,7 +2,7 @@ import ImageItem from './ImageItem'
 
 function ImageGrid() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 px-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 gap-4">
       <ImageItem src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" />
       <ImageItem src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" />
       <ImageItem src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" />
