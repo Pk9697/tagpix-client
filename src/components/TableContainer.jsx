@@ -2,7 +2,7 @@
 import { Checkbox, Table, TextInput, Button } from 'flowbite-react'
 import { RiDeleteBin2Line } from 'react-icons/ri'
 
-function TableContainer() {
+function TableContainer({ labelState: { labels = [] } = {} }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
@@ -29,54 +29,27 @@ function TableContainer() {
             <Table.HeadCell>Actions</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="p-4">
-                <Checkbox />
-              </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {`Apple MacBook Pro 17"`}
-              </Table.Cell>
-              <Table.Cell>
-                <button
-                  type="button"
-                  className="font-medium text-red-600 hover:underline dark:text-cyan-500"
-                >
-                  <RiDeleteBin2Line />
-                </button>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="p-4">
-                <Checkbox />
-              </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                Microsoft Surface Pro
-              </Table.Cell>
-              <Table.Cell>
-                <button
-                  type="button"
-                  className="font-medium text-red-600 hover:underline dark:text-cyan-500"
-                >
-                  <RiDeleteBin2Line />
-                </button>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="p-4">
-                <Checkbox />
-              </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                Magic Mouse 2
-              </Table.Cell>
-              <Table.Cell>
-                <button
-                  type="button"
-                  className="font-medium text-red-600 hover:underline dark:text-cyan-500"
-                >
-                  <RiDeleteBin2Line />
-                </button>
-              </Table.Cell>
-            </Table.Row>
+            {labels.map(({ _id, name }) => (
+              <Table.Row
+                key={_id}
+                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+              >
+                <Table.Cell className="p-4">
+                  <Checkbox />
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  {name}
+                </Table.Cell>
+                <Table.Cell>
+                  <button
+                    type="button"
+                    className="font-medium text-red-600 hover:underline dark:text-cyan-500"
+                  >
+                    <RiDeleteBin2Line />
+                  </button>
+                </Table.Cell>
+              </Table.Row>
+            ))}
           </Table.Body>
         </Table>
       </div>

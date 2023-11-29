@@ -1,6 +1,9 @@
 import ScrollableItem from './ScrollableItem'
 
-function ScrollableList({ includeRemoveIcon = false }) {
+function ScrollableList({
+  includeRemoveIcon = false,
+  labelState: { labels = [] } = {},
+}) {
   return (
     <div
       className={`${
@@ -15,13 +18,14 @@ function ScrollableList({ includeRemoveIcon = false }) {
           All
         </button>
       )}
-      <ScrollableItem includeRemoveIcon={includeRemoveIcon} name="Shoes" />
-      <ScrollableItem includeRemoveIcon={includeRemoveIcon} name="Bags" />
-      <ScrollableItem
-        includeRemoveIcon={includeRemoveIcon}
-        name="Electronics"
-      />
-      <ScrollableItem includeRemoveIcon={includeRemoveIcon} name="Gaming" />
+
+      {labels.map(({ _id, name }) => (
+        <ScrollableItem
+          key={_id}
+          includeRemoveIcon={includeRemoveIcon}
+          name={name}
+        />
+      ))}
     </div>
   )
 }

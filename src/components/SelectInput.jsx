@@ -1,12 +1,12 @@
 import { Select } from 'flowbite-react'
 
-function SelectInput() {
+function SelectInput({ labelState: { labels = [] } = {} }) {
   return (
-    <Select id="countries" required>
+    <Select id="labels" required>
       <option>Select Label...</option>
-      <option>Canada</option>
-      <option>France</option>
-      <option>Germany</option>
+      {labels.map(({ _id, name }) => (
+        <option key={_id}>{name}</option>
+      ))}
     </Select>
   )
 }

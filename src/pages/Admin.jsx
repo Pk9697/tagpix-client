@@ -6,6 +6,7 @@ import FileInputContainer from '../components/FileInput'
 import TableContainer from '../components/TableContainer'
 import { AuthContext } from '../context/authContext'
 import notify from '../helpers/commonFunctions'
+import { LabelContext } from '../context/labelContext'
 
 function Admin() {
   const {
@@ -13,6 +14,10 @@ function Admin() {
       user: { isAdmin },
     },
   } = useContext(AuthContext)
+
+  const { labelState } = useContext(LabelContext)
+
+  console.log({ labelState })
 
   if (!isAdmin) {
     notify({
@@ -28,7 +33,7 @@ function Admin() {
         <FileInputContainer />
       </Tabs.Item>
       <Tabs.Item title="Labels">
-        <TableContainer />
+        <TableContainer labelState={labelState} />
       </Tabs.Item>
     </Tabs>
   )
