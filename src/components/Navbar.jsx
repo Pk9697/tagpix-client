@@ -1,8 +1,16 @@
 import { Avatar, Dropdown, Navbar, Button } from 'flowbite-react'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/authContext'
 
 function NavbarContainer() {
-  const isLoggedin = false
+  const {
+    authState: {
+      user: { isAdmin, name, email },
+      isLoggedIn,
+    },
+    logOutUser,
+  } = useContext(AuthContext)
 
   return (
     <Navbar fluid rounded>
@@ -17,7 +25,7 @@ function NavbarContainer() {
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        {isLoggedin ? (
+        {isLoggedIn ? (
           <Dropdown
             arrowIcon={false}
             inline
@@ -30,13 +38,13 @@ function NavbarContainer() {
             }
           >
             <Dropdown.Header>
-              <span className="block text-sm">Bonnie Green</span>
+              <span className="block text-sm">{name}</span>
               <span className="block truncate text-sm font-medium">
-                name@flowbite.com
+                {email}
               </span>
             </Dropdown.Header>
             <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={logOutUser}>Log out</Dropdown.Item>
           </Dropdown>
         ) : (
           <Button.Group>
@@ -54,9 +62,11 @@ function NavbarContainer() {
         <Navbar.Link as={Link} to="/">
           Home
         </Navbar.Link>
-        <Navbar.Link as={Link} to="/admin">
-          Admin
-        </Navbar.Link>
+        {isAdmin && (
+          <Navbar.Link as={Link} to="/admin">
+            Admin
+          </Navbar.Link>
+        )}
       </Navbar.Collapse>
     </Navbar>
   )
