@@ -2,6 +2,9 @@ import { useEffect, useReducer } from 'react'
 import labelReducer from '../reducers/label'
 import notify from '../helpers/commonFunctions'
 import {
+  createLabelError,
+  createLabelStart,
+  createLabelSuccess,
   fetchAllLabelsError,
   fetchAllLabelsStart,
   fetchAllLabelsSuccess,
@@ -43,7 +46,28 @@ function useLabel(token) {
     }
   }
 
-  return { labelState }
+  const createLabel = async (content) => {
+    const lowerCaseContent = content.toLowerCase()
+    dispatch(createLabelStart())
+    const url = APIUrls.createLabel(lowerCaseContent)
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    const data = await res.json()
+    if (data.success) {
+      dispatch(createLabelSuccess(data.data.label))
+      notify({ type: 'success', msg: data.message })
+    } else {
+      dispatch(createLabelError(data.message))
+      notify({ type: 'error', msg: data.message })
+    }
+  }
+
+  return { labelState, createLabel }
 }
 
 export default useLabel

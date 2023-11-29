@@ -6,4 +6,5 @@ export const APIUrls = {
   authenticateUser: () => `${API_ROOT}/auth/authenticate-user`,
   register: () => `${API_ROOT}/auth/register`,
   fetchAllLabels: () => `${API_ROOT}/labels`,
+  createLabel: (data) => `${API_ROOT}/labels/create?name=${data}`,
 }

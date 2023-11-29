@@ -1,21 +1,36 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Checkbox, Table, TextInput, Button } from 'flowbite-react'
+import { useContext, useState } from 'react'
 import { RiDeleteBin2Line } from 'react-icons/ri'
+import { LabelContext } from '../context/labelContext'
 
 function TableContainer({ labelState: { labels = [] } = {} }) {
+  const [label, setLabel] = useState('')
+  const { createLabel } = useContext(LabelContext)
+
+  const handleCreateLabel = (e) => {
+    e.preventDefault()
+    createLabel(label)
+    setLabel('')
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
+      <form onSubmit={handleCreateLabel} className="flex items-center gap-2">
         <TextInput
+          name="label"
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
           id="small"
           type="text"
           placeholder="Type New Label"
           sizing="sm"
+          required
         />
-        <Button color="success" size="sm">
+        <Button type="submit" color="success" size="sm">
           Create
         </Button>
-      </div>
+      </form>
       <div>
         <Button color="failure">Delete Selected</Button>
       </div>

@@ -1,4 +1,7 @@
 import {
+  CREATE_LABEL_ERROR,
+  CREATE_LABEL_START,
+  CREATE_LABEL_SUCCESS,
   FETCH_ALL_LABELS_ERROR,
   FETCH_ALL_LABELS_START,
   FETCH_ALL_LABELS_SUCCESS,
@@ -28,6 +31,28 @@ export default function labelReducer(state, action) {
         ...state,
         inProgress: false,
         labels: [],
+        error: action.payload,
+      }
+    }
+    case CREATE_LABEL_START: {
+      return {
+        ...state,
+        inProgress: true,
+        error: null,
+      }
+    }
+    case CREATE_LABEL_SUCCESS: {
+      return {
+        ...state,
+        labels: [action.payload, ...state.labels],
+        inProgress: false,
+        error: null,
+      }
+    }
+    case CREATE_LABEL_ERROR: {
+      return {
+        ...state,
+        inProgress: false,
         error: action.payload,
       }
     }
