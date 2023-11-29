@@ -7,4 +7,5 @@ export const APIUrls = {
   register: () => `${API_ROOT}/auth/register`,
   fetchAllLabels: () => `${API_ROOT}/labels`,
   createLabel: (data) => `${API_ROOT}/labels/create?name=${data}`,
+  deleteLabel: (labelId) => `${API_ROOT}/labels/delete/${labelId}`,
 }

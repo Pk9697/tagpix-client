@@ -6,7 +6,7 @@ import { LabelContext } from '../context/labelContext'
 
 function TableContainer({ labelState: { labels = [] } = {} }) {
   const [label, setLabel] = useState('')
-  const { createLabel } = useContext(LabelContext)
+  const { createLabel, deleteLabel } = useContext(LabelContext)
 
   const handleCreateLabel = (e) => {
     e.preventDefault()
@@ -59,6 +59,7 @@ function TableContainer({ labelState: { labels = [] } = {} }) {
                   <button
                     type="button"
                     className="font-medium text-red-600 hover:underline dark:text-cyan-500"
+                    onClick={() => deleteLabel(_id)}
                   >
                     <RiDeleteBin2Line />
                   </button>

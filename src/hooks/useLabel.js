@@ -5,6 +5,9 @@ import {
   createLabelError,
   createLabelStart,
   createLabelSuccess,
+  deleteLabelError,
+  deleteLabelStart,
+  deleteLabelSuccess,
   fetchAllLabelsError,
   fetchAllLabelsStart,
   fetchAllLabelsSuccess,
@@ -67,7 +70,27 @@ function useLabel(token) {
     }
   }
 
-  return { labelState, createLabel }
+  const deleteLabel = async (labelId) => {
+    dispatch(deleteLabelStart())
+    const url = APIUrls.deleteLabel(labelId)
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    const data = await res.json()
+    if (data.success) {
+      dispatch(deleteLabelSuccess(labelId))
+      notify({ type: 'success', msg: data.message })
+    } else {
+      dispatch(deleteLabelError(data.message))
+      notify({ type: 'error', msg: data.message })
+    }
+  }
+
+  return { labelState, createLabel, deleteLabel }
 }
 
 export default useLabel
