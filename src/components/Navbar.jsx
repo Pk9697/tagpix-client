@@ -1,11 +1,12 @@
 import { Avatar, Dropdown, Navbar, Button } from 'flowbite-react'
+import { Link } from 'react-router-dom'
 
 function NavbarContainer() {
-  const isLoggedin = true
+  const isLoggedin = false
 
   return (
     <Navbar fluid rounded>
-      <Navbar.Brand href="#">
+      <Navbar.Brand as={Link} to="/">
         <img
           src="/vite.svg"
           className="mr-3 h-6 sm:h-9"
@@ -39,17 +40,23 @@ function NavbarContainer() {
           </Dropdown>
         ) : (
           <Button.Group>
-            <Button color="gray">Login</Button>
-            <Button color="gray">Register</Button>
+            <Button as={Link} to="/login" color="gray">
+              Login
+            </Button>
+            <Button as={Link} to="/register" color="gray">
+              Register
+            </Button>
           </Button.Group>
         )}
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link href="#" active>
+        <Navbar.Link as={Link} to="/">
           Home
         </Navbar.Link>
-        <Navbar.Link href="#">Admin</Navbar.Link>
+        <Navbar.Link as={Link} to="/admin">
+          Admin
+        </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   )
