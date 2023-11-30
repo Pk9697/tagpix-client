@@ -8,7 +8,6 @@ function Home() {
   const { labelState: { labels } = {} } = useContext(LabelContext)
   const { postState } = useContext(PostContext)
 
-  console.log({ postState })
   return (
     <>
       <ScrollableList labels={labels} />
