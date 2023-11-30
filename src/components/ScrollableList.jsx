@@ -1,9 +1,6 @@
 import ScrollableItem from './ScrollableItem'
 
-function ScrollableList({
-  includeRemoveIcon = false,
-  labelState: { labels = [] } = {},
-}) {
+function ScrollableList({ includeRemoveIcon = false, labels = [] }) {
   return (
     <div
       className={`${

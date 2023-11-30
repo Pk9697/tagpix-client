@@ -1,6 +1,6 @@
 import { Select } from 'flowbite-react'
 
-function SelectInput({ labelState: { labels = [] } = {} }) {
+function SelectInput({ labels = [] }) {
   return (
     <Select id="labels" required>
       <option>Select Label...</option>

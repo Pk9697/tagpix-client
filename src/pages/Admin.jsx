@@ -17,7 +17,7 @@ function Admin() {
 
   const { labelState } = useContext(LabelContext)
 
-  console.log({ labelState })
+  // console.log({ labelState })
 
   if (!isAdmin) {
     notify({
