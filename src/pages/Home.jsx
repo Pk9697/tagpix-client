@@ -7,6 +7,7 @@ import { PostContext } from '../context/postContext'
 function Home() {
   const { labelState: { labels } = {} } = useContext(LabelContext)
   const { postState } = useContext(PostContext)
+  console.log({ labels }, { postState })
 
   return (
     <>

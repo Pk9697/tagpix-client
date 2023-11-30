@@ -10,10 +10,13 @@ function LabelContextProvider({ children }) {
     authState: { token },
   } = useContext(AuthContext)
 
-  const { labelState, createLabel, deleteLabel } = useLabel(token)
+  const { labelState, createLabel, deleteLabel, dispatchLabel } =
+    useLabel(token)
 
   return (
-    <LabelContext.Provider value={{ labelState, createLabel, deleteLabel }}>
+    <LabelContext.Provider
+      value={{ labelState, createLabel, deleteLabel, dispatchLabel }}
+    >
       {children}
     </LabelContext.Provider>
   )

@@ -1,7 +1,7 @@
 import {
-  ASSIGN_LABEL_ERROR,
-  ASSIGN_LABEL_START,
-  ASSIGN_LABEL_SUCCESS,
+  ASSIGN_LABEL_TO_POST_ERROR,
+  ASSIGN_LABEL_TO_POST_START,
+  ASSIGN_LABEL_TO_POST_SUCCESS,
   CREATE_POST_ERROR,
   CREATE_POST_START,
   CREATE_POST_SUCCESS,
@@ -51,22 +51,22 @@ export const createPostError = (data) => {
   }
 }
 
-export const assignLabelStart = () => {
+export const assignLabelToPostStart = () => {
   return {
-    type: ASSIGN_LABEL_START,
+    type: ASSIGN_LABEL_TO_POST_START,
   }
 }
 
-export const assignLabelSuccess = (data) => {
+export const assignLabelToPostSuccess = (data) => {
   return {
-    type: ASSIGN_LABEL_SUCCESS,
+    type: ASSIGN_LABEL_TO_POST_SUCCESS,
     payload: data,
   }
 }
 
-export const assignLabelError = (data) => {
+export const assignLabelToPostError = (data) => {
   return {
-    type: ASSIGN_LABEL_ERROR,
+    type: ASSIGN_LABEL_TO_POST_ERROR,
     payload: data,
   }
 }

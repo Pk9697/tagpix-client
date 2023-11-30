@@ -21,7 +21,7 @@ const initialState = {
 }
 
 function useLabel(token) {
-  const [labelState, dispatch] = useReducer(labelReducer, initialState)
+  const [labelState, dispatchLabel] = useReducer(labelReducer, initialState)
 
   useEffect(() => {
     if (token) {
@@ -31,7 +31,7 @@ function useLabel(token) {
   }, [token])
 
   const fetchAllLabels = async () => {
-    dispatch(fetchAllLabelsStart())
+    dispatchLabel(fetchAllLabelsStart())
     const url = APIUrls.fetchAllLabels()
     const res = await fetch(url, {
       method: 'GET',
@@ -42,16 +42,16 @@ function useLabel(token) {
     })
     const data = await res.json()
     if (data.success) {
-      dispatch(fetchAllLabelsSuccess(data.data.labels))
+      dispatchLabel(fetchAllLabelsSuccess(data.data.labels))
     } else {
-      dispatch(fetchAllLabelsError(data.message))
+      dispatchLabel(fetchAllLabelsError(data.message))
       notify({ type: 'error', msg: data.message })
     }
   }
 
   const createLabel = async (content) => {
     const lowerCaseContent = content.toLowerCase()
-    dispatch(createLabelStart())
+    dispatchLabel(createLabelStart())
     const url = APIUrls.createLabel(lowerCaseContent)
     const res = await fetch(url, {
       method: 'POST',
@@ -62,16 +62,16 @@ function useLabel(token) {
     })
     const data = await res.json()
     if (data.success) {
-      dispatch(createLabelSuccess(data.data.label))
+      dispatchLabel(createLabelSuccess(data.data.label))
       notify({ type: 'success', msg: data.message })
     } else {
-      dispatch(createLabelError(data.message))
+      dispatchLabel(createLabelError(data.message))
       notify({ type: 'error', msg: data.message })
     }
   }
 
   const deleteLabel = async (labelId) => {
-    dispatch(deleteLabelStart())
+    dispatchLabel(deleteLabelStart())
     const url = APIUrls.deleteLabel(labelId)
     const res = await fetch(url, {
       method: 'DELETE',
@@ -82,15 +82,15 @@ function useLabel(token) {
     })
     const data = await res.json()
     if (data.success) {
-      dispatch(deleteLabelSuccess(labelId))
+      dispatchLabel(deleteLabelSuccess(labelId))
       notify({ type: 'success', msg: data.message })
     } else {
-      dispatch(deleteLabelError(data.message))
+      dispatchLabel(deleteLabelError(data.message))
       notify({ type: 'error', msg: data.message })
     }
   }
 
-  return { labelState, createLabel, deleteLabel }
+  return { labelState, createLabel, deleteLabel, dispatchLabel }
 }
 
 export default useLabel

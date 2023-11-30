@@ -11,7 +11,7 @@ function ImageItem({ postId, src, labels = [] }) {
   const { labelState: { labels: allLabels = [] } = {} } =
     useContext(LabelContext)
 
-  const { assignLabel } = useContext(PostContext)
+  const { assignLabelToPost } = useContext(PostContext)
 
   const [selectedLabelId, setSelectedLabelId] = useState('')
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ function ImageItem({ postId, src, labels = [] }) {
 
   const handleAssignLabel = () => {
     if (selectedLabelId) {
-      assignLabel(postId, selectedLabelId)
+      assignLabelToPost(postId, selectedLabelId)
     }
     setSelectedLabelId('')
   }

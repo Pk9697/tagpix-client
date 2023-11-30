@@ -10,10 +10,10 @@ function PostContextProvider({ children }) {
     authState: { token },
   } = useContext(AuthContext)
 
-  const { postState, createPost, assignLabel } = usePost(token)
+  const { postState, createPost, assignLabelToPost } = usePost(token)
 
   return (
-    <PostContext.Provider value={{ postState, createPost, assignLabel }}>
+    <PostContext.Provider value={{ postState, createPost, assignLabelToPost }}>
       {children}
     </PostContext.Provider>
   )

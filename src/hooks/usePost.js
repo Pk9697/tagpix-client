@@ -1,11 +1,11 @@
-import { useEffect, useReducer } from 'react'
+import { useContext, useEffect, useReducer } from 'react'
 import postReducer from '../reducers/post'
 import notify from '../helpers/commonFunctions'
 import { APIUrls } from '../helpers/utils'
 import {
-  assignLabelError,
-  assignLabelStart,
-  assignLabelSuccess,
+  assignLabelToPostError,
+  assignLabelToPostStart,
+  assignLabelToPostSuccess,
   createPostError,
   createPostStart,
   createPostSuccess,
@@ -13,6 +13,12 @@ import {
   fetchAllPostsStart,
   fetchAllPostsSuccess,
 } from '../actions/post'
+import {
+  assignPostToLabelError,
+  assignPostToLabelStart,
+  assignPostToLabelSuccess,
+} from '../actions/label'
+import { LabelContext } from '../context/labelContext'
 
 const initialState = {
   posts: [],
@@ -21,8 +27,9 @@ const initialState = {
 }
 
 function usePost(token) {
-  const [postState, dispatch] = useReducer(postReducer, initialState)
+  const [postState, dispatchPost] = useReducer(postReducer, initialState)
 
+  const { dispatchLabel } = useContext(LabelContext)
   useEffect(() => {
     if (token) {
       // eslint-disable-next-line no-use-before-define
@@ -31,7 +38,7 @@ function usePost(token) {
   }, [token])
 
   const fetchAllPosts = async () => {
-    dispatch(fetchAllPostsStart())
+    dispatchPost(fetchAllPostsStart())
     const url = APIUrls.fetchAllPosts()
     const res = await fetch(url, {
       method: 'GET',
@@ -42,15 +49,15 @@ function usePost(token) {
     })
     const data = await res.json()
     if (data.success) {
-      dispatch(fetchAllPostsSuccess(data.data.posts))
+      dispatchPost(fetchAllPostsSuccess(data.data.posts))
     } else {
-      dispatch(fetchAllPostsError(data.message))
+      dispatchPost(fetchAllPostsError(data.message))
       notify({ type: 'error', msg: data.message })
     }
   }
   // Don't include 'Content-Type': 'application/json' inside headers here as it gives PayloadTooLargeError: request entity too large error
   const createPost = async (formData) => {
-    dispatch(createPostStart())
+    dispatchPost(createPostStart())
     const url = APIUrls.createPost()
     const res = await fetch(url, {
       method: 'POST',
@@ -62,17 +69,19 @@ function usePost(token) {
     })
     const data = await res.json()
     if (data.success) {
-      dispatch(createPostSuccess(data.data.post))
+      dispatchPost(createPostSuccess(data.data.post))
       notify({ type: 'success', msg: data.message })
     } else {
-      dispatch(createPostError(data.message))
+      dispatchPost(createPostError(data.message))
       notify({ type: 'error', msg: data.message })
     }
   }
 
-  const assignLabel = async (postId, labelId) => {
-    dispatch(assignLabelStart())
-    const url = APIUrls.assignLabel(postId, labelId)
+  const assignLabelToPost = async (postId, labelId) => {
+    dispatchPost(assignLabelToPostStart())
+    dispatchLabel(assignPostToLabelStart())
+
+    const url = APIUrls.assignLabelToPost(postId, labelId)
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -82,15 +91,17 @@ function usePost(token) {
     })
     const data = await res.json()
     if (data.success) {
-      dispatch(assignLabelSuccess(data.data))
+      dispatchPost(assignLabelToPostSuccess(data.data))
+      dispatchLabel(assignPostToLabelSuccess(data.data))
       notify({ type: 'success', msg: data.message })
     } else {
-      dispatch(assignLabelError(data.message))
+      dispatchPost(assignLabelToPostError(data.message))
+      dispatchLabel(assignPostToLabelError(data.data))
       notify({ type: 'error', msg: data.message })
     }
   }
 
-  return { postState, createPost, assignLabel }
+  return { postState, createPost, assignLabelToPost }
 }
 
 export default usePost

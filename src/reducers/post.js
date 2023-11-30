@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import {
-  ASSIGN_LABEL_ERROR,
-  ASSIGN_LABEL_START,
-  ASSIGN_LABEL_SUCCESS,
+  ASSIGN_LABEL_TO_POST_ERROR,
+  ASSIGN_LABEL_TO_POST_START,
+  ASSIGN_LABEL_TO_POST_SUCCESS,
   CREATE_POST_ERROR,
   CREATE_POST_START,
   CREATE_POST_SUCCESS,
@@ -61,14 +61,14 @@ export default function postReducer(state, action) {
       }
     }
 
-    case ASSIGN_LABEL_START: {
+    case ASSIGN_LABEL_TO_POST_START: {
       return {
         ...state,
         inProgress: true,
         error: null,
       }
     }
-    case ASSIGN_LABEL_SUCCESS: {
+    case ASSIGN_LABEL_TO_POST_SUCCESS: {
       const updatedPosts = state.posts.map((post) =>
         post._id === action.payload.post._id
           ? {
@@ -84,7 +84,7 @@ export default function postReducer(state, action) {
         error: null,
       }
     }
-    case ASSIGN_LABEL_ERROR: {
+    case ASSIGN_LABEL_TO_POST_ERROR: {
       return {
         ...state,
         inProgress: false,

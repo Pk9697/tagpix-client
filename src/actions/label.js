@@ -1,4 +1,7 @@
 import {
+  ASSIGN_POST_TO_LABEL_ERROR,
+  ASSIGN_POST_TO_LABEL_START,
+  ASSIGN_POST_TO_LABEL_SUCCESS,
   CREATE_LABEL_ERROR,
   CREATE_LABEL_START,
   CREATE_LABEL_SUCCESS,
@@ -67,6 +70,26 @@ export const deleteLabelSuccess = (data) => {
 export const deleteLabelError = (data) => {
   return {
     type: DELETE_LABEL_ERROR,
+    payload: data,
+  }
+}
+
+export const assignPostToLabelStart = () => {
+  return {
+    type: ASSIGN_POST_TO_LABEL_START,
+  }
+}
+
+export const assignPostToLabelSuccess = (data) => {
+  return {
+    type: ASSIGN_POST_TO_LABEL_SUCCESS,
+    payload: data,
+  }
+}
+
+export const assignPostToLabelError = (data) => {
+  return {
+    type: ASSIGN_POST_TO_LABEL_ERROR,
     payload: data,
   }
 }
