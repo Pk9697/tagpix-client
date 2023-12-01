@@ -1,6 +1,6 @@
 import ImageItem from './ImageItem'
 
-function ImageGrid({ postState: { posts = [] } = {} }) {
+function ImageGrid({ posts = [] }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 gap-4">
       {posts.map(({ _id, image, labels }) => (

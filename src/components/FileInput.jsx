@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { FileInput, Label, Button } from 'flowbite-react'
-import { PostContext } from '../context/postContext'
+import { PostLabelContext } from '../context/postLabelContext'
 
 function FileInputContainer() {
   const [postImg, setPostImg] = useState(null)
-  const { createPost } = useContext(PostContext)
+  const { createPost } = useContext(PostLabelContext)
 
   const handleImage = (e) => {
     setPostImg(e.target.files[0])
@@ -16,7 +16,7 @@ function FileInputContainer() {
     const formData = new FormData()
     if (postImg) {
       formData.append('image', postImg)
-      createPost(formData)
+      createPost({ formData })
     }
     setPostImg(null)
   }

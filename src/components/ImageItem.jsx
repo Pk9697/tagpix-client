@@ -4,14 +4,11 @@ import { RiDeleteBin2Line } from 'react-icons/ri'
 import SelectInput from './SelectInput'
 import ScrollableList from './ScrollableList'
 import { BASE_ROOT } from '../helpers/utils'
-import { LabelContext } from '../context/labelContext'
-import { PostContext } from '../context/postContext'
+import { PostLabelContext } from '../context/postLabelContext'
 
 function ImageItem({ postId, src, labels = [] }) {
-  const { labelState: { labels: allLabels = [] } = {} } =
-    useContext(LabelContext)
-
-  const { assignLabelToPost } = useContext(PostContext)
+  const { postLabelState: { labels: allLabels = [] } = {}, assignLabelToPost } =
+    useContext(PostLabelContext)
 
   const [selectedLabelId, setSelectedLabelId] = useState('')
   const handleChange = (e) => {
@@ -20,7 +17,7 @@ function ImageItem({ postId, src, labels = [] }) {
 
   const handleAssignLabel = () => {
     if (selectedLabelId) {
-      assignLabelToPost(postId, selectedLabelId)
+      assignLabelToPost({ postId, labelId: selectedLabelId })
     }
     setSelectedLabelId('')
   }

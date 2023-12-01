@@ -2,15 +2,19 @@
 import { Checkbox, Table, TextInput, Button } from 'flowbite-react'
 import { useContext, useState } from 'react'
 import { RiDeleteBin2Line } from 'react-icons/ri'
-import { LabelContext } from '../context/labelContext'
+import { PostLabelContext } from '../context/postLabelContext'
 
-function TableContainer({ labelState: { labels = [] } = {} }) {
+function TableContainer() {
   const [label, setLabel] = useState('')
-  const { createLabel, deleteLabel } = useContext(LabelContext)
+  const {
+    postLabelState: { labels = [] } = {},
+    createLabel,
+    deleteLabel,
+  } = useContext(PostLabelContext)
 
   const handleCreateLabel = (e) => {
     e.preventDefault()
-    createLabel(label)
+    createLabel({ content: label })
     setLabel('')
   }
 
@@ -59,7 +63,7 @@ function TableContainer({ labelState: { labels = [] } = {} }) {
                   <button
                     type="button"
                     className="font-medium text-red-600 hover:underline dark:text-cyan-500"
-                    onClick={() => deleteLabel(_id)}
+                    onClick={() => deleteLabel({ labelId: _id })}
                   >
                     <RiDeleteBin2Line />
                   </button>
