@@ -1,12 +1,20 @@
+import { useContext } from 'react'
 import { CiCircleRemove } from 'react-icons/ci'
+import { PostLabelContext } from '../context/postLabelContext'
 
 function ScrollableItem({
+  postId,
   labelId,
   selectedLabelId,
   handleFilter,
   name,
   includeRemoveIcon = false,
 }) {
+  const { removeLabelFromPost } = useContext(PostLabelContext)
+  const handleRemoveLabel = () => {
+    removeLabelFromPost({ postId, labelId })
+  }
+
   return (
     <div
       className={`${
@@ -20,7 +28,10 @@ function ScrollableItem({
       </button>
       {includeRemoveIcon && (
         <div className="flex items-center justify-center">
-          <CiCircleRemove className="hover:text-red-700" />
+          <CiCircleRemove
+            onClick={handleRemoveLabel}
+            className="hover:text-red-700"
+          />
         </div>
       )}
     </div>

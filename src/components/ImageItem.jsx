@@ -40,7 +40,7 @@ function ImageItem({ postId, src, labels = [] }) {
           className="cursor-pointer hover:text-green-700"
         />
       </div>
-      <ScrollableList labels={labels} includeRemoveIcon />
+      <ScrollableList postId={postId} labels={labels} includeRemoveIcon />
       <RiDeleteBin2Line className="absolute top-5 right-5 cursor-pointer hover:text-red-700" />
     </div>
   )

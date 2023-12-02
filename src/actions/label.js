@@ -10,6 +10,9 @@ import {
   FETCH_ALL_LABELS_ERROR,
   FETCH_ALL_LABELS_START,
   FETCH_ALL_LABELS_SUCCESS,
+  FILTER_POSTS_BY_LABEL_ERROR,
+  FILTER_POSTS_BY_LABEL_START,
+  FILTER_POSTS_BY_LABEL_SUCCESS,
 } from './actionTypes'
 
 /* ACTION CREATORS */
@@ -129,6 +132,46 @@ export const deleteLabel = async ({ labelId, token, dispatch }) => {
     notify({ type: 'success', msg: data.message })
   } else {
     dispatch(deleteLabelError(data.message))
+    notify({ type: 'error', msg: data.message })
+  }
+}
+
+export const filterPostsByLabelStart = () => {
+  return {
+    type: FILTER_POSTS_BY_LABEL_START,
+  }
+}
+
+export const filterPostsByLabelSuccess = (data) => {
+  return {
+    type: FILTER_POSTS_BY_LABEL_SUCCESS,
+    payload: data,
+  }
+}
+
+export const filterPostsByLabelError = (data) => {
+  return {
+    type: FILTER_POSTS_BY_LABEL_ERROR,
+    payload: data,
+  }
+}
+
+export const filterPostsByLabel = async ({ labelId, token, dispatch }) => {
+  dispatch(filterPostsByLabelStart())
+  const url = APIUrls.filterPostsByLabel(labelId)
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  const data = await res.json()
+  if (data.success) {
+    dispatch(filterPostsByLabelSuccess(data.data.posts))
+    notify({ type: 'success', msg: data.message })
+  } else {
+    dispatch(filterPostsByLabelError(data.message))
     notify({ type: 'error', msg: data.message })
   }
 }

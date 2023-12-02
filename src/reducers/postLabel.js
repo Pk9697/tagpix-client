@@ -18,6 +18,12 @@ import {
   FETCH_ALL_POSTS_ERROR,
   FETCH_ALL_POSTS_START,
   FETCH_ALL_POSTS_SUCCESS,
+  FILTER_POSTS_BY_LABEL_ERROR,
+  FILTER_POSTS_BY_LABEL_START,
+  FILTER_POSTS_BY_LABEL_SUCCESS,
+  REMOVE_LABEL_FROM_POST_ERROR,
+  REMOVE_LABEL_FROM_POST_START,
+  REMOVE_LABEL_FROM_POST_SUCCESS,
   UPDATE_POSTS_SUCCESS,
 } from '../actions/actionTypes'
 
@@ -160,6 +166,7 @@ export default function postLabelReducer(state, action) {
             }
           : post
       )
+      // ! Not needed anymore cos we are fetching posts filtered from api
       const updatedLabels = state.labels.map((label) =>
         label._id === action.payload.label._id
           ? {
@@ -189,6 +196,75 @@ export default function postLabelReducer(state, action) {
         posts: action.payload,
       }
     }
+    case REMOVE_LABEL_FROM_POST_START: {
+      return {
+        ...state,
+        inProgress: true,
+        error: null,
+      }
+    }
+    case REMOVE_LABEL_FROM_POST_SUCCESS: {
+      const updatedPosts = state.posts.map((post) =>
+        post._id === action.payload.postId
+          ? {
+              ...post,
+              labels: post.labels.filter(
+                (label) => label._id !== action.payload.labelId
+              ),
+            }
+          : post
+      )
+      // ! Not needed anymore cos we are fetching posts filtered from api
+      const updatedLabels = state.labels.map((label) =>
+        label._id === action.payload.labelId
+          ? {
+              ...label,
+              posts: label.posts.filter(
+                (post) => post._id !== action.payload.postId
+              ),
+            }
+          : label
+      )
+
+      return {
+        ...state,
+        posts: updatedPosts,
+        labels: updatedLabels,
+        inProgress: false,
+        error: null,
+      }
+    }
+    case REMOVE_LABEL_FROM_POST_ERROR: {
+      return {
+        ...state,
+        inProgress: false,
+        error: action.payload,
+      }
+    }
+
+    case FILTER_POSTS_BY_LABEL_START: {
+      return {
+        ...state,
+        inProgress: true,
+        error: null,
+      }
+    }
+    case FILTER_POSTS_BY_LABEL_SUCCESS: {
+      return {
+        ...state,
+        posts: action.payload,
+        inProgress: false,
+        error: null,
+      }
+    }
+    case FILTER_POSTS_BY_LABEL_ERROR: {
+      return {
+        ...state,
+        inProgress: false,
+        error: action.payload,
+      }
+    }
+
     default:
       return state
   }

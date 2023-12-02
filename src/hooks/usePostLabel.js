@@ -6,8 +6,14 @@ import {
   createPost,
   assignLabelToPost,
   updatePosts,
+  removeLabelFromPost,
 } from '../actions/post'
-import { createLabel, deleteLabel, fetchAllLabels } from '../actions/label'
+import {
+  createLabel,
+  deleteLabel,
+  fetchAllLabels,
+  filterPostsByLabel,
+} from '../actions/label'
 
 const initialState = {
   posts: [],
@@ -35,6 +41,10 @@ function usePostLabel(token) {
       assignLabelToPost({ token, dispatch, ...args }),
     updatePosts: ({ ...args }) => updatePosts({ dispatch, ...args }),
     fetchAllPosts: () => fetchAllPosts({ token, dispatch }),
+    removeLabelFromPost: ({ ...args }) =>
+      removeLabelFromPost({ token, dispatch, ...args }),
+    filterPostsByLabel: ({ ...args }) =>
+      filterPostsByLabel({ token, dispatch, ...args }),
   }
 }
 

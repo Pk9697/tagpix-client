@@ -14,4 +14,7 @@ export const APIUrls = {
   createPost: () => `${API_ROOT}/posts/create`,
   assignLabelToPost: (postId, labelId) =>
     `${API_ROOT}/posts/assignLabel?postId=${postId}&labelId=${labelId}`,
+  removeLabelFromPost: (postId, labelId) =>
+    `${API_ROOT}/posts/removeLabel?postId=${postId}&labelId=${labelId}`,
+  filterPostsByLabel: (labelId) => `${API_ROOT}/labels/${labelId}`,
 }

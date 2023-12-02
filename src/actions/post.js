@@ -10,6 +10,9 @@ import {
   FETCH_ALL_POSTS_ERROR,
   FETCH_ALL_POSTS_START,
   FETCH_ALL_POSTS_SUCCESS,
+  REMOVE_LABEL_FROM_POST_ERROR,
+  REMOVE_LABEL_FROM_POST_START,
+  REMOVE_LABEL_FROM_POST_SUCCESS,
   UPDATE_POSTS_ERROR,
   UPDATE_POSTS_START,
   UPDATE_POSTS_SUCCESS,
@@ -164,4 +167,47 @@ export const updatePostsError = (data) => {
 export const updatePosts = async ({ dispatch, posts }) => {
   dispatch(updatePostsStart())
   dispatch(updatePostsSuccess(posts))
+}
+
+export const removeLabelFromPostStart = () => {
+  return {
+    type: REMOVE_LABEL_FROM_POST_START,
+  }
+}
+export const removeLabelFromPostSuccess = (data) => {
+  return {
+    type: REMOVE_LABEL_FROM_POST_SUCCESS,
+    payload: data,
+  }
+}
+export const removeLabelFromPostError = (data) => {
+  return {
+    type: REMOVE_LABEL_FROM_POST_ERROR,
+    payload: data,
+  }
+}
+
+export const removeLabelFromPost = async ({
+  token,
+  dispatch,
+  postId,
+  labelId,
+}) => {
+  dispatch(removeLabelFromPostStart())
+  const url = APIUrls.removeLabelFromPost(postId, labelId)
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  const data = await res.json()
+  if (data.success) {
+    dispatch(removeLabelFromPostSuccess({ postId, labelId }))
+    notify({ type: 'success', msg: data.message })
+  } else {
+    dispatch(removeLabelFromPost(data.message))
+    notify({ type: 'error', msg: data.message })
+  }
 }

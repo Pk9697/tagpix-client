@@ -2,24 +2,20 @@ import { useContext, useState } from 'react'
 import ScrollableItem from './ScrollableItem'
 import { PostLabelContext } from '../context/postLabelContext'
 
-function ScrollableList({ includeRemoveIcon = false, labels = [] }) {
-  const { updatePosts, fetchAllPosts } = useContext(PostLabelContext)
+function ScrollableList({ postId, includeRemoveIcon = false, labels = [] }) {
+  const { fetchAllPosts, filterPostsByLabel } = useContext(PostLabelContext)
   const [selectedLabelId, setSelectedLabelId] = useState('all')
 
-  const handleFilter = (labelId, posts) => {
+  const handleFilter = (labelId) => {
     if (!includeRemoveIcon) {
-      if (posts === 'all') {
+      if (labelId === 'all') {
         fetchAllPosts()
         setSelectedLabelId('all')
       } else {
-        updatePosts({ posts })
         setSelectedLabelId(labelId)
+        filterPostsByLabel({ labelId })
       }
     }
-  }
-
-  if (!includeRemoveIcon) {
-    console.log({ selectedLabelId })
   }
 
   return (
@@ -30,7 +26,7 @@ function ScrollableList({ includeRemoveIcon = false, labels = [] }) {
     >
       {!includeRemoveIcon && (
         <button
-          onClick={() => handleFilter('all', 'all')}
+          onClick={() => handleFilter('all')}
           type="button"
           className={`${
             selectedLabelId === 'all'
@@ -42,14 +38,15 @@ function ScrollableList({ includeRemoveIcon = false, labels = [] }) {
         </button>
       )}
 
-      {labels.map(({ _id, name, posts }) => (
+      {labels.map(({ _id, name }) => (
         <ScrollableItem
           selectedLabelId={selectedLabelId}
           key={_id}
           includeRemoveIcon={includeRemoveIcon}
           name={name}
-          handleFilter={() => handleFilter(_id, posts)}
+          handleFilter={() => handleFilter(_id)}
           labelId={_id}
+          postId={postId}
         />
       ))}
     </div>
