@@ -10,6 +10,9 @@ import {
   FETCH_ALL_POSTS_ERROR,
   FETCH_ALL_POSTS_START,
   FETCH_ALL_POSTS_SUCCESS,
+  UPDATE_POSTS_ERROR,
+  UPDATE_POSTS_START,
+  UPDATE_POSTS_SUCCESS,
 } from './actionTypes'
 
 /* ACTION CREATORS */
@@ -138,4 +141,27 @@ export const assignLabelToPost = async ({
     dispatch(assignLabelToPostError(data.message))
     notify({ type: 'error', msg: data.message })
   }
+}
+
+export const updatePostsStart = () => {
+  return {
+    type: UPDATE_POSTS_START,
+  }
+}
+export const updatePostsSuccess = (data) => {
+  return {
+    type: UPDATE_POSTS_SUCCESS,
+    payload: data,
+  }
+}
+export const updatePostsError = (data) => {
+  return {
+    type: UPDATE_POSTS_ERROR,
+    payload: data,
+  }
+}
+
+export const updatePosts = async ({ dispatch, posts }) => {
+  dispatch(updatePostsStart())
+  dispatch(updatePostsSuccess(posts))
 }

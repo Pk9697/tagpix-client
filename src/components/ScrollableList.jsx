@@ -1,6 +1,27 @@
+import { useContext, useState } from 'react'
 import ScrollableItem from './ScrollableItem'
+import { PostLabelContext } from '../context/postLabelContext'
 
 function ScrollableList({ includeRemoveIcon = false, labels = [] }) {
+  const { updatePosts, fetchAllPosts } = useContext(PostLabelContext)
+  const [selectedLabelId, setSelectedLabelId] = useState('all')
+
+  const handleFilter = (labelId, posts) => {
+    if (!includeRemoveIcon) {
+      if (posts === 'all') {
+        fetchAllPosts()
+        setSelectedLabelId('all')
+      } else {
+        updatePosts({ posts })
+        setSelectedLabelId(labelId)
+      }
+    }
+  }
+
+  if (!includeRemoveIcon) {
+    console.log({ selectedLabelId })
+  }
+
   return (
     <div
       className={`${
@@ -9,18 +30,26 @@ function ScrollableList({ includeRemoveIcon = false, labels = [] }) {
     >
       {!includeRemoveIcon && (
         <button
+          onClick={() => handleFilter('all', 'all')}
           type="button"
-          className="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800"
+          className={`${
+            selectedLabelId === 'all'
+              ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800'
+              : 'backdrop-blur-[20px] flex gap-4 cursor-pointer items-center text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center dark:text-white dark:focus:ring-gray-800'
+          }`}
         >
           All
         </button>
       )}
 
-      {labels.map(({ _id, name }) => (
+      {labels.map(({ _id, name, posts }) => (
         <ScrollableItem
+          selectedLabelId={selectedLabelId}
           key={_id}
           includeRemoveIcon={includeRemoveIcon}
           name={name}
+          handleFilter={() => handleFilter(_id, posts)}
+          labelId={_id}
         />
       ))}
     </div>

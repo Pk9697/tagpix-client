@@ -1,7 +1,12 @@
 /* eslint-disable no-use-before-define */
 import { useEffect, useReducer } from 'react'
 import postLabelReducer from '../reducers/postLabel'
-import { fetchAllPosts, createPost, assignLabelToPost } from '../actions/post'
+import {
+  fetchAllPosts,
+  createPost,
+  assignLabelToPost,
+  updatePosts,
+} from '../actions/post'
 import { createLabel, deleteLabel, fetchAllLabels } from '../actions/label'
 
 const initialState = {
@@ -28,6 +33,8 @@ function usePostLabel(token) {
     deleteLabel: ({ ...args }) => deleteLabel({ token, dispatch, ...args }),
     assignLabelToPost: ({ ...args }) =>
       assignLabelToPost({ token, dispatch, ...args }),
+    updatePosts: ({ ...args }) => updatePosts({ dispatch, ...args }),
+    fetchAllPosts: () => fetchAllPosts({ token, dispatch }),
   }
 }
 

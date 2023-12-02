@@ -18,6 +18,7 @@ import {
   FETCH_ALL_POSTS_ERROR,
   FETCH_ALL_POSTS_START,
   FETCH_ALL_POSTS_SUCCESS,
+  UPDATE_POSTS_SUCCESS,
 } from '../actions/actionTypes'
 
 /* REDUCER */
@@ -122,7 +123,6 @@ export default function postLabelReducer(state, action) {
         error: null,
       }
     }
-    //   ! FIX FOR POST
     case DELETE_LABEL_SUCCESS: {
       const updatedPosts = state.posts.map((post) => ({
         ...post,
@@ -181,6 +181,12 @@ export default function postLabelReducer(state, action) {
         ...state,
         inProgress: false,
         error: action.payload,
+      }
+    }
+    case UPDATE_POSTS_SUCCESS: {
+      return {
+        ...state,
+        posts: action.payload,
       }
     }
     default:
