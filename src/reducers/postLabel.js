@@ -12,6 +12,9 @@ import {
   DELETE_LABEL_ERROR,
   DELETE_LABEL_START,
   DELETE_LABEL_SUCCESS,
+  DELETE_POST_ERROR,
+  DELETE_POST_START,
+  DELETE_POST_SUCCESS,
   FETCH_ALL_LABELS_ERROR,
   FETCH_ALL_LABELS_START,
   FETCH_ALL_LABELS_SUCCESS,
@@ -258,6 +261,30 @@ export default function postLabelReducer(state, action) {
       }
     }
     case FILTER_POSTS_BY_LABEL_ERROR: {
+      return {
+        ...state,
+        inProgress: false,
+        error: action.payload,
+      }
+    }
+
+    case DELETE_POST_START: {
+      return {
+        ...state,
+        inProgress: true,
+        error: null,
+      }
+    }
+    // TODO Update Labels from api
+    case DELETE_POST_SUCCESS: {
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== action.payload),
+        inProgress: false,
+        error: null,
+      }
+    }
+    case DELETE_POST_ERROR: {
       return {
         ...state,
         inProgress: false,

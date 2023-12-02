@@ -7,6 +7,7 @@ import {
   assignLabelToPost,
   updatePosts,
   removeLabelFromPost,
+  deletePost,
 } from '../actions/post'
 import {
   createLabel,
@@ -45,6 +46,7 @@ function usePostLabel(token) {
       removeLabelFromPost({ token, dispatch, ...args }),
     filterPostsByLabel: ({ ...args }) =>
       filterPostsByLabel({ token, dispatch, ...args }),
+    deletePost: ({ ...args }) => deletePost({ token, dispatch, ...args }),
   }
 }
 

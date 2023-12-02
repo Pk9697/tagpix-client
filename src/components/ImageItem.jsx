@@ -7,8 +7,11 @@ import { BASE_ROOT } from '../helpers/utils'
 import { PostLabelContext } from '../context/postLabelContext'
 
 function ImageItem({ postId, src, labels = [] }) {
-  const { postLabelState: { labels: allLabels = [] } = {}, assignLabelToPost } =
-    useContext(PostLabelContext)
+  const {
+    postLabelState: { labels: allLabels = [] } = {},
+    assignLabelToPost,
+    deletePost,
+  } = useContext(PostLabelContext)
 
   const [selectedLabelId, setSelectedLabelId] = useState('')
   const handleChange = (e) => {
@@ -20,6 +23,10 @@ function ImageItem({ postId, src, labels = [] }) {
       assignLabelToPost({ postId, labelId: selectedLabelId })
     }
     setSelectedLabelId('')
+  }
+
+  const handleDeletePost = () => {
+    deletePost({ postId })
   }
 
   return (
@@ -41,7 +48,10 @@ function ImageItem({ postId, src, labels = [] }) {
         />
       </div>
       <ScrollableList postId={postId} labels={labels} includeRemoveIcon />
-      <RiDeleteBin2Line className="absolute top-5 right-5 cursor-pointer hover:text-red-700" />
+      <RiDeleteBin2Line
+        onClick={handleDeletePost}
+        className="absolute top-5 right-5 cursor-pointer hover:text-red-700"
+      />
     </div>
   )
 }

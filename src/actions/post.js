@@ -7,6 +7,9 @@ import {
   CREATE_POST_ERROR,
   CREATE_POST_START,
   CREATE_POST_SUCCESS,
+  DELETE_POST_ERROR,
+  DELETE_POST_START,
+  DELETE_POST_SUCCESS,
   FETCH_ALL_POSTS_ERROR,
   FETCH_ALL_POSTS_START,
   FETCH_ALL_POSTS_SUCCESS,
@@ -208,6 +211,44 @@ export const removeLabelFromPost = async ({
     notify({ type: 'success', msg: data.message })
   } else {
     dispatch(removeLabelFromPost(data.message))
+    notify({ type: 'error', msg: data.message })
+  }
+}
+
+export const deletePostStart = () => {
+  return {
+    type: DELETE_POST_START,
+  }
+}
+export const deletePostSuccess = (data) => {
+  return {
+    type: DELETE_POST_SUCCESS,
+    payload: data,
+  }
+}
+export const deletePostError = (data) => {
+  return {
+    type: DELETE_POST_ERROR,
+    payload: data,
+  }
+}
+
+export const deletePost = async ({ token, dispatch, postId }) => {
+  dispatch(deletePostStart())
+  const url = APIUrls.deletePost(postId)
+  const res = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  const data = await res.json()
+  if (data.success) {
+    dispatch(deletePostSuccess(postId))
+    notify({ type: 'success', msg: data.message })
+  } else {
+    dispatch(deletePost(data.message))
     notify({ type: 'error', msg: data.message })
   }
 }
