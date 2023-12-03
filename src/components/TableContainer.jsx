@@ -11,6 +11,7 @@ function TableContainer() {
     createLabel,
     deleteLabel,
     toggleCheckLabel,
+    deleteCheckedLabels,
   } = useContext(PostLabelContext)
 
   const handleCreateLabel = (e) => {
@@ -22,8 +23,6 @@ function TableContainer() {
   const handleToggleCheckLabel = (labelId) => {
     toggleCheckLabel({ labelId })
   }
-
-  console.log({ labels })
 
   return (
     <div className="flex flex-col gap-4">
@@ -43,7 +42,9 @@ function TableContainer() {
         </Button>
       </form>
       <div>
-        <Button color="failure">Delete Selected</Button>
+        <Button color="failure" onClick={() => deleteCheckedLabels({ labels })}>
+          Delete Selected
+        </Button>
       </div>
       <div className="overflow-x-auto">
         <Table hoverable>

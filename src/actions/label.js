@@ -4,6 +4,9 @@ import {
   CREATE_LABEL_ERROR,
   CREATE_LABEL_START,
   CREATE_LABEL_SUCCESS,
+  DELETE_CHECKED_LABELS_ERROR,
+  DELETE_CHECKED_LABELS_START,
+  DELETE_CHECKED_LABELS_SUCCESS,
   DELETE_LABEL_ERROR,
   DELETE_LABEL_START,
   DELETE_LABEL_SUCCESS,
@@ -199,4 +202,31 @@ export const toggleCheckLabelError = (data) => {
 
 export const toggleCheckLabel = ({ dispatch, labelId }) => {
   dispatch(toggleCheckLabelSuccess(labelId))
+}
+
+export const deleteCheckedLabelsStart = () => {
+  return {
+    type: DELETE_CHECKED_LABELS_START,
+  }
+}
+export const deleteCheckedLabelsSuccess = () => {
+  return {
+    type: DELETE_CHECKED_LABELS_SUCCESS,
+  }
+}
+export const deleteCheckedLabelsError = (data) => {
+  return {
+    type: DELETE_CHECKED_LABELS_ERROR,
+    payload: data,
+  }
+}
+
+export const deleteCheckedLabels = async ({ token, dispatch, labels = [] }) => {
+  labels.forEach(async ({ _id, isChecked }) => {
+    if (isChecked) {
+      await deleteLabel({ token, dispatch, labelId: _id })
+    }
+  })
+
+  // dispatch(deleteCheckedLabelsSuccess())
 }

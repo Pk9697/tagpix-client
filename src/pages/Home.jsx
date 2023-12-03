@@ -7,7 +7,7 @@ function Home() {
   const { postLabelState: { labels, posts } = {} } =
     useContext(PostLabelContext)
 
-  console.log({ posts, labels })
+  // console.log({ posts, labels })
 
   return (
     <>

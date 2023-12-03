@@ -11,6 +11,7 @@ import {
 } from '../actions/post'
 import {
   createLabel,
+  deleteCheckedLabels,
   deleteLabel,
   fetchAllLabels,
   filterPostsByLabel,
@@ -49,6 +50,8 @@ function usePostLabel(token) {
       filterPostsByLabel({ token, dispatch, ...args }),
     deletePost: ({ ...args }) => deletePost({ token, dispatch, ...args }),
     toggleCheckLabel: ({ ...args }) => toggleCheckLabel({ dispatch, ...args }),
+    deleteCheckedLabels: ({ ...args }) =>
+      deleteCheckedLabels({ token, dispatch, ...args }),
   }
 }
 

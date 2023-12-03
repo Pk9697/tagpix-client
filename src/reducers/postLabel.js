@@ -9,6 +9,7 @@ import {
   CREATE_POST_ERROR,
   CREATE_POST_START,
   CREATE_POST_SUCCESS,
+  DELETE_CHECKED_LABELS_SUCCESS,
   DELETE_LABEL_ERROR,
   DELETE_LABEL_START,
   DELETE_LABEL_SUCCESS,
@@ -301,6 +302,13 @@ export default function postLabelReducer(state, action) {
             ? { ...label, isChecked: !label.isChecked }
             : label
         ),
+      }
+    }
+
+    case DELETE_CHECKED_LABELS_SUCCESS: {
+      return {
+        ...state,
+        labels: state.labels.filter((label) => !label.isChecked),
       }
     }
 
