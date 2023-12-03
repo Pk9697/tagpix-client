@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Label, TextInput } from 'flowbite-react'
+import { Button, Label, TextInput, ToggleSwitch } from 'flowbite-react'
 import { Navigate } from 'react-router-dom'
 import useRegister from '../hooks/useRegister'
 
@@ -10,6 +10,8 @@ function Register() {
     email,
     password,
     confirmPassword,
+    isAdmin,
+    setIsAdmin,
     inProgress,
     redirect,
     handleChange,
@@ -89,6 +91,12 @@ function Register() {
               required
             />
           </div>
+          <ToggleSwitch
+            checked={isAdmin}
+            label="Register as Admin"
+            onChange={() => setIsAdmin((prev) => !prev)}
+            name="isAdmin"
+          />
           <Button disabled={inProgress} type="submit">
             {inProgress ? 'LOGGING IN' : 'REGISTER'}
           </Button>

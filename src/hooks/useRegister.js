@@ -9,16 +9,13 @@ function useRegister() {
     password: '',
     confirmPassword: '',
   })
+  const [isAdmin, setIsAdmin] = useState(false)
   const {
-    authState: {
-      user: { isAdmin },
-      isLoggedIn,
-      inProgress,
-    },
+    authState: { user, isLoggedIn, inProgress },
     registerUser,
   } = useContext(AuthContext)
 
-  const redirect = useRedirect(isLoggedIn, isAdmin)
+  const redirect = useRedirect(isLoggedIn, user.isAdmin)
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -32,7 +29,7 @@ function useRegister() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    registerUser(formFields)
+    registerUser({ ...formFields, isAdmin })
     setFormFields(() => {
       return {
         name: '',
@@ -41,6 +38,7 @@ function useRegister() {
         confirmPassword: '',
       }
     })
+    setIsAdmin(false)
   }
 
   const { name, email, password, confirmPassword } = formFields
@@ -50,6 +48,8 @@ function useRegister() {
     email,
     password,
     confirmPassword,
+    isAdmin,
+    setIsAdmin,
     inProgress,
     redirect,
     handleChange,
