@@ -13,6 +13,9 @@ import {
   FILTER_POSTS_BY_LABEL_ERROR,
   FILTER_POSTS_BY_LABEL_START,
   FILTER_POSTS_BY_LABEL_SUCCESS,
+  TOGGLE_CHECK_LABEL_ERROR,
+  TOGGLE_CHECK_LABEL_START,
+  TOGGLE_CHECK_LABEL_SUCCESS,
 } from './actionTypes'
 
 /* ACTION CREATORS */
@@ -174,4 +177,26 @@ export const filterPostsByLabel = async ({ labelId, token, dispatch }) => {
     dispatch(filterPostsByLabelError(data.message))
     notify({ type: 'error', msg: data.message })
   }
+}
+
+export const toggleCheckLabelStart = () => {
+  return {
+    type: TOGGLE_CHECK_LABEL_START,
+  }
+}
+export const toggleCheckLabelSuccess = (data) => {
+  return {
+    type: TOGGLE_CHECK_LABEL_SUCCESS,
+    payload: data,
+  }
+}
+export const toggleCheckLabelError = (data) => {
+  return {
+    type: TOGGLE_CHECK_LABEL_ERROR,
+    payload: data,
+  }
+}
+
+export const toggleCheckLabel = ({ dispatch, labelId }) => {
+  dispatch(toggleCheckLabelSuccess(labelId))
 }

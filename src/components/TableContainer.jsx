@@ -10,6 +10,7 @@ function TableContainer() {
     postLabelState: { labels = [] } = {},
     createLabel,
     deleteLabel,
+    toggleCheckLabel,
   } = useContext(PostLabelContext)
 
   const handleCreateLabel = (e) => {
@@ -17,6 +18,12 @@ function TableContainer() {
     createLabel({ content: label })
     setLabel('')
   }
+
+  const handleToggleCheckLabel = (labelId) => {
+    toggleCheckLabel({ labelId })
+  }
+
+  console.log({ labels })
 
   return (
     <div className="flex flex-col gap-4">
@@ -48,13 +55,16 @@ function TableContainer() {
             <Table.HeadCell>Actions</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {labels.map(({ _id, name }) => (
+            {labels.map(({ _id, name, isChecked }) => (
               <Table.Row
                 key={_id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
               >
                 <Table.Cell className="p-4">
-                  <Checkbox />
+                  <Checkbox
+                    checked={isChecked}
+                    onChange={() => handleToggleCheckLabel(_id)}
+                  />
                 </Table.Cell>
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {name}

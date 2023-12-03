@@ -27,6 +27,7 @@ import {
   REMOVE_LABEL_FROM_POST_ERROR,
   REMOVE_LABEL_FROM_POST_START,
   REMOVE_LABEL_FROM_POST_SUCCESS,
+  TOGGLE_CHECK_LABEL_SUCCESS,
   UPDATE_POSTS_SUCCESS,
 } from '../actions/actionTypes'
 
@@ -69,7 +70,7 @@ export default function postLabelReducer(state, action) {
       return {
         ...state,
         inProgress: false,
-        labels: action.payload,
+        labels: action.payload.map((label) => ({ ...label, isChecked: false })),
         error: null,
       }
     }
@@ -113,7 +114,7 @@ export default function postLabelReducer(state, action) {
     case CREATE_LABEL_SUCCESS: {
       return {
         ...state,
-        labels: [action.payload, ...state.labels],
+        labels: [{ ...action.payload, isChecked: false }, ...state.labels],
         inProgress: false,
         error: null,
       }
@@ -289,6 +290,17 @@ export default function postLabelReducer(state, action) {
         ...state,
         inProgress: false,
         error: action.payload,
+      }
+    }
+
+    case TOGGLE_CHECK_LABEL_SUCCESS: {
+      return {
+        ...state,
+        labels: state.labels.map((label) =>
+          label._id === action.payload
+            ? { ...label, isChecked: !label.isChecked }
+            : label
+        ),
       }
     }
 

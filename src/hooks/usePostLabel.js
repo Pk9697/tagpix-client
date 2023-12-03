@@ -14,6 +14,7 @@ import {
   deleteLabel,
   fetchAllLabels,
   filterPostsByLabel,
+  toggleCheckLabel,
 } from '../actions/label'
 
 const initialState = {
@@ -47,6 +48,7 @@ function usePostLabel(token) {
     filterPostsByLabel: ({ ...args }) =>
       filterPostsByLabel({ token, dispatch, ...args }),
     deletePost: ({ ...args }) => deletePost({ token, dispatch, ...args }),
+    toggleCheckLabel: ({ ...args }) => toggleCheckLabel({ dispatch, ...args }),
   }
 }
 

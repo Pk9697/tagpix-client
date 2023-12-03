@@ -21,6 +21,7 @@ function PostLabelContextProvider({ children }) {
     removeLabelFromPost,
     filterPostsByLabel,
     deletePost,
+    toggleCheckLabel,
   } = usePostLabel(token)
 
   return (
@@ -36,6 +37,7 @@ function PostLabelContextProvider({ children }) {
         removeLabelFromPost,
         filterPostsByLabel,
         deletePost,
+        toggleCheckLabel,
       }}
     >
       {children}
