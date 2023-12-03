@@ -1,18 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Checkbox, Table, TextInput, Button } from 'flowbite-react'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { RiDeleteBin2Line } from 'react-icons/ri'
 import { PostLabelContext } from '../context/postLabelContext'
 
 function TableContainer() {
   const [label, setLabel] = useState('')
+  const [selectAllCheck, setSelectAllCheck] = useState(false)
   const {
     postLabelState: { labels = [] } = {},
     createLabel,
     deleteLabel,
     toggleCheckLabel,
     deleteCheckedLabels,
+    selectAll,
   } = useContext(PostLabelContext)
+
+  useEffect(() => {
+    selectAll({ selectAllCheck })
+  }, [selectAllCheck])
 
   const handleCreateLabel = (e) => {
     e.preventDefault()
@@ -22,6 +28,11 @@ function TableContainer() {
 
   const handleToggleCheckLabel = (labelId) => {
     toggleCheckLabel({ labelId })
+  }
+
+  const handleDeleteSelected = () => {
+    setSelectAllCheck(false)
+    deleteCheckedLabels({ labels })
   }
 
   return (
@@ -42,7 +53,7 @@ function TableContainer() {
         </Button>
       </form>
       <div>
-        <Button color="failure" onClick={() => deleteCheckedLabels({ labels })}>
+        <Button color="failure" onClick={handleDeleteSelected}>
           Delete Selected
         </Button>
       </div>
@@ -50,7 +61,10 @@ function TableContainer() {
         <Table hoverable>
           <Table.Head>
             <Table.HeadCell className="p-4">
-              <Checkbox />
+              <Checkbox
+                checked={selectAllCheck}
+                onChange={() => setSelectAllCheck((prev) => !prev)}
+              />
             </Table.HeadCell>
             <Table.HeadCell>Labels</Table.HeadCell>
             <Table.HeadCell>Actions</Table.HeadCell>

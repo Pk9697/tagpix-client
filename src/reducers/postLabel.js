@@ -28,6 +28,7 @@ import {
   REMOVE_LABEL_FROM_POST_ERROR,
   REMOVE_LABEL_FROM_POST_START,
   REMOVE_LABEL_FROM_POST_SUCCESS,
+  SELECT_ALL_SUCCESS,
   TOGGLE_CHECK_LABEL_SUCCESS,
   UPDATE_POSTS_SUCCESS,
 } from '../actions/actionTypes'
@@ -309,6 +310,16 @@ export default function postLabelReducer(state, action) {
       return {
         ...state,
         labels: state.labels.filter((label) => !label.isChecked),
+      }
+    }
+
+    case SELECT_ALL_SUCCESS: {
+      return {
+        ...state,
+        labels: state.labels.map((label) => ({
+          ...label,
+          isChecked: action.payload,
+        })),
       }
     }
 

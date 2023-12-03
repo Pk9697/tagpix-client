@@ -16,6 +16,9 @@ import {
   FILTER_POSTS_BY_LABEL_ERROR,
   FILTER_POSTS_BY_LABEL_START,
   FILTER_POSTS_BY_LABEL_SUCCESS,
+  SELECT_ALL_ERROR,
+  SELECT_ALL_START,
+  SELECT_ALL_SUCCESS,
   TOGGLE_CHECK_LABEL_ERROR,
   TOGGLE_CHECK_LABEL_START,
   TOGGLE_CHECK_LABEL_SUCCESS,
@@ -229,4 +232,26 @@ export const deleteCheckedLabels = async ({ token, dispatch, labels = [] }) => {
   })
 
   // dispatch(deleteCheckedLabelsSuccess())
+}
+
+export const selectAllStart = () => {
+  return {
+    type: SELECT_ALL_START,
+  }
+}
+export const selectAllSuccess = (data) => {
+  return {
+    type: SELECT_ALL_SUCCESS,
+    payload: data,
+  }
+}
+export const selectAllError = (data) => {
+  return {
+    type: SELECT_ALL_ERROR,
+    payload: data,
+  }
+}
+
+export const selectAll = async ({ selectAllCheck, dispatch }) => {
+  dispatch(selectAllSuccess(selectAllCheck))
 }
