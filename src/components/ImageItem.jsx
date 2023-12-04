@@ -30,7 +30,7 @@ function ImageItem({ postId, src, labels = [] }) {
   }
 
   return (
-    <div className="flex flex-col relative gap-2 pb-2 sm:gap-4 border border-gray-200 rounded-lg">
+    <div className="flex flex-col aspect-[3/4] relative gap-2 pb-2 sm:gap-4 border border-gray-200 rounded-lg">
       <img
         className="h-full object-cover max-w-full rounded-lg"
         src={BASE_ROOT + src}

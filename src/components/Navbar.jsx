@@ -1,6 +1,6 @@
 import { Avatar, Dropdown, Navbar, Button } from 'flowbite-react'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { AuthContext } from '../context/authContext'
 
 function NavbarContainer() {
@@ -11,6 +11,8 @@ function NavbarContainer() {
     },
     logOutUser,
   } = useContext(AuthContext)
+
+  const location = useLocation()
 
   return (
     <Navbar fluid rounded>
@@ -59,11 +61,15 @@ function NavbarContainer() {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link as={Link} to="/">
+        <Navbar.Link as={Link} to="/" active={location.pathname === '/'}>
           Home
         </Navbar.Link>
         {isAdmin && (
-          <Navbar.Link as={Link} to="/admin">
+          <Navbar.Link
+            as={Link}
+            to="/admin"
+            active={location.pathname === '/admin'}
+          >
             Admin
           </Navbar.Link>
         )}
