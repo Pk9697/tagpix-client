@@ -35,6 +35,7 @@ function ImageItem({ postId, src, labels = [] }) {
         className="h-full object-cover max-w-full rounded-lg"
         src={BASE_ROOT + src}
         alt="image_item"
+        loading="lazy"
       />
       <div className="flex flex-row px-4 gap-1 justify-between items-center">
         <SelectInput
